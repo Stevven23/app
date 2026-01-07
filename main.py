@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from database import customers 
 app = FastAPI()
 
 app.add_middleware(
