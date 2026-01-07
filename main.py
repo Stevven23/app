@@ -11,6 +11,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+def serialize_customer(c):
+    return {
+        "_id": str(c["_id"]),
+        "id": c.get("id"),
+        "fullName": c.get("fullName"),
+        "email": c.get("email"),
+        "type": c.get("type"),
+        "discount": c.get("discount"),
+        "totalSale": c.get("totalSale"),
+    }
+
 @app.get("/customers")
 async def get_customers():
-    return {"ok": True}
+    result = []
+    async for c in customers.find():
+        result.append(serialize_customer(c))
+    return result
